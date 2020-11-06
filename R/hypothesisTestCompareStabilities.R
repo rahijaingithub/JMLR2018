@@ -10,11 +10,11 @@ res<-getStability(X2)
 stab2<-res$stability
 var2<-res$variance
 
-T<-(stab2-stab1)/sqrt(var1+var2)
+Tvalue<-(stab2-stab1)/sqrt(var1+var2) # To avoid confusion with "TRUE" since R inherently treats T as TRUE.
 
 # we compute the cumulative inverse of the standard normal
 z<-qnorm(1-alpha/2)
-if(abs(T)>=z){
+if(abs(Tvalue)>=z){
 	reject<-TRUE
 	decision<-"Reject H0: the two algorithms have different population stabilities"
 }else{
@@ -22,6 +22,6 @@ if(abs(T)>=z){
 	decision<-"Do not reject H0"
 }
 
-p_value<-2*(1-pnorm(abs(T)))
-return(list("reject"=reject,"decision"=decision,"T"=T,"p_value"=p_value))
+p_value<-2*(1-pnorm(abs(Tvalue)))
+return(list("reject"=reject,"decision"=decision,"T"=Tvalue,"p_value"=p_value))
 }
